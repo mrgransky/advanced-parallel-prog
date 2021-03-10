@@ -1,0 +1,131 @@
+1. Connect to narvi account from this machine:
+	$ ssh -vi ~/narvi_key/xenial-narvi-key alijani@narvi.tut.fi
+	
+2. mount working_folders from narvi computer to local: (type in local machine)
+	$ sshfs -o IdentityFile=/home/xenial/narvi_key/xenial-narvi-key alijani@narvi.tut.fi:example_folder /home/xenial/narvi_ws/
+	
+3. To unmount files from this machine:
+	$ fusermount -u /home/xenial/narvi_ws
+
+4. jupyter notebook:
+	remote machine:
+		$ jupyter notebook --no-browser --port=8889
+	
+	local machine:
+		$ ssh -i ~/narvi_key/xenial-narvi-key alijani@narvi.tut.fi -N -f -L localhost:8888:localhost:8889 alijani@narvi.tut.fi
+	
+	open firefox:
+		token pass from remote terminal 
+		
+5. copy from local -> remote:
+	# Narvi:
+  $ rsync -avzh --stats --progress -e "ssh -i ~/narvi_key/xenial-narvi-key" ~/Datasets/Robotcar/summer/mono/right alijani@narvi.tut.fi:Datasets/Robotcar/summer/mono
+	
+  # Puhti:
+  $ rsync -avzh ~/narvi_key alijanif@puhti.csc.fi:~/
+
+6. copy from server -> local:
+  # Train
+  $ rsync -avzh --stats --progress -e "ssh -i ~/narvi_key/xenial-narvi-key" alijani@narvi.tut.fi:/sgn-data/MLG/OxfordRadarRobotCar/2019-01-10-11-46-21-radar-oxford-10k/mono_left/1547120786975211.png ~/Datasets/RobotCar2019
+
+  # Gallery:
+	$ rsync -avzh --stats --progress -e "ssh -i ~/narvi_key/xenial-narvi-key" alijani@narvi.tut.fi:/sgn-data/MLG/OxfordRadarRobotCar/2019-01-10-12-32-52-radar-oxford-10k/mono_left/1547123587986763.png ~/Datasets/RobotCar2019
+
+  # Q1:
+	$ rsync -avzh --stats --progress -e "ssh -i ~/narvi_key/xenial-narvi-key" alijani@narvi.tut.fi:/sgn-data/MLG/OxfordRadarRobotCar/2019-01-10-14-50-05-radar-oxford-10k/mono_left/1547131898909865.png ~/Datasets/RobotCar2019
+
+  # Q2:
+	$ rsync -avzh --stats --progress -e "ssh -i ~/narvi_key/xenial-narvi-key" alijani@narvi.tut.fi:/sgn-data/MLG/OxfordRadarRobotCar/2019-01-11-12-26-55-radar-oxford-10k/mono_left/1547209981395052.png ~/Datasets/RobotCar2019
+
+  #Q3:
+	$ rsync -avzh --stats --progress -e "ssh -i ~/narvi_key/xenial-narvi-key" alijani@narvi.tut.fi:/sgn-data/MLG/OxfordRadarRobotCar/2019-01-16-14-15-33-radar-oxford-10k/mono_left/1547648916721998.png ~/Datasets/RobotCar2019
+
+  $ rsync -avzh --stats --progress -e "ssh -i ~/narvi_key/xenial-narvi-key" alijani@narvi.tut.fi:/sgn-data/MLG/OxfordRadarRobotCar/2019-01-10-11-46-21-radar-oxford-10k/mono_left /scratch/project_2004072/2019-01-10-11-46-21-radar-oxford-10k
+  $ rsync -avzh --stats --progress -e "ssh -i ~/narvi_key/xenial-narvi-key" alijani@narvi.tut.fi:/sgn-data/MLG/OxfordRadarRobotCar/2019-01-10-12-32-52-radar-oxford-10k/mono_left /scratch/project_2004072/2019-01-10-12-32-52-radar-oxford-10k
+  $ rsync -avzh --stats --progress -e "ssh -i ~/narvi_key/xenial-narvi-key" alijani@narvi.tut.fi:/sgn-data/MLG/OxfordRadarRobotCar/2019-01-10-14-50-05-radar-oxford-10k/mono_left /scratch/project_2004072/2019-01-10-14-50-05-radar-oxford-10k
+  $ rsync -avzh --stats --progress -e "ssh -i ~/narvi_key/xenial-narvi-key" alijani@narvi.tut.fi:/sgn-data/MLG/OxfordRadarRobotCar/2019-01-11-12-26-55-radar-oxford-10k/mono_left /scratch/project_2004072/2019-01-11-12-26-55-radar-oxford-10k
+  $ rsync -avzh --stats --progress -e "ssh -i ~/narvi_key/xenial-narvi-key" alijani@narvi.tut.fi:/sgn-data/MLG/OxfordRadarRobotCar/2019-01-16-14-15-33-radar-oxford-10k/mono_left /scratch/project_2004072/2019-01-16-14-15-33-radar-oxford-10k
+  
+  $ rsync -avzh --stats --progress -e "ssh -i ~/narvi_key/xenial-narvi-key" alijani@narvi.tut.fi:/sgn-data/MLG/COLD/cold-saarbruecken /scratch/project_2004072/COLD
+  
+  
+  
+
+########################## CONDA ##########################
+7. package handling:
+	$ conda info
+	$ conda create -n py27_gpu python=2.7 scikit-learn caffe-gpu natsort seaborn pydot numba -y
+	$ conda create -n py37_gpu python=3.7 scikit-learn natsort -y
+  
+  $ conda env list 
+  # OR
+  $ conda info --envs
+  
+  $ source ~/WS_Farid/essentials/gpu_intrc.sh
+	$ conda activate py27
+	
+	$ conda config --add channels conda-forge # prioritize conda-forge
+	$ conda config --remove channels conda-forge
+	
+	$ conda config --show 			# show all config
+	$ conda config --show-sources
+
+	$ cat ~/.condarc #  1) conda-forge , 2) defaults
+	# or...
+	$ conda config --show channels
+
+	$ conda search pytorch -v
+  $ conda install pytorch torchvision cudatoolkit -c anaconda
+	$ conda remove scipy curl # 2 packages from current environment
+	
+	
+	$ conda activate py27
+	$ conda deactivate
+
+  # all installed packages in my conda env
+	$ conda list --show-channel-urls 
+
+	# remove the whole environment:
+	$ conda remove -n py27 --all -y
+
+	$ python -c "import caffe; caffe.set_mode_gpu(); caffe.set_device(0)"
+  $ python -c "import torch; print(torch.__version__); print(torch.cuda.is_available())"
+  $ python -c "import cv2; print(cv2.__version__)"
+  
+	source /projappl/project_2004072/miniconda3/etc/profile.d/conda.sh
+
+########################## SLURM ##########################
+how to see which job I am running:
+	$ watch squeue -u alijani # monitor every 2 sec
+run interactive cpu/gpu: to debug and run something...
+	$ source interactive_cpu.sh
+	# OR... 
+	$ source interactive_gpu.sh 
+run batch mode cpu/gpu:
+	$ sbatch batch_cpu.sh
+	# OR... 
+	$ sbatch batch_gpu.sh
+cancel 1 job:
+	$ scancel job_id
+cancel all jobs:
+	$ scancel -u alijani
+########################## SLURM ##########################
+
+########################## command ##########################
+$ watch nvidia-smi --format=csv --query-gpu=memory.total,utilization.gpu,memory.used,memory.free
+$ find Nordland/results/GoogleNet/*.csv -mtime -3 -print
+$ find Nordland/results/VGG16/*.csv -mtime -3 -exec rm {} +
+
+# ref: https://slurm.schedmd.com/sinfo.html:
+$ sinfo -o "%45N %9P %3c %10m %11l %15G %14e %5D %25f"
+########################## command ##########################
+
+
+########################## VSCODE ##########################
+cttl + K + 0: fold all codes
+cttl + k + j: unfold all codes
+
+cttl + PgUp/ PgDn: switch between terminals/tabs
+########################## VSCODE ##########################
+
+$ ls /etc | wc -l
