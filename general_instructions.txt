@@ -1,3 +1,5 @@
+# own instruction:
+
 1. Connect to narvi account from this machine:
 	$ ssh -vi ~/narvi_key/xenial-narvi-key alijani@narvi.tut.fi
 	
