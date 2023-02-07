@@ -1,5 +1,7 @@
 # Advanced Parallel Programming
 
+My forked repo from CSC
+
 Exercise material and model answers for the CSC course "Advanced Parallel
 Programming". The course is part of PRACE Advanced Training Center
 (PATC) activity at CSC.
